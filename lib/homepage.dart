@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -11,6 +14,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final ImagePicker _picker = ImagePicker();
+  Image exampleThumbnail = Image.asset('images/mlkit_logo.png');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                   flex: 2,
-                  child: Image.asset('images/mlkit_logo.png'),
+                  child: exampleThumbnail,
                 ),
                 Expanded(
                   flex: 1,
@@ -70,17 +76,31 @@ class _MyHomePageState extends State<MyHomePage> {
             flex: 2,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Expanded(
                   flex: 1,
                   child: PhotoButton(
                     iconImage: Icon(Icons.camera),
+                    onPress: () async {
+                      final _image =
+                          await _picker.pickImage(source: ImageSource.camera);
+                      setState(() {
+                        exampleThumbnail = Image.file(File(_image!.path));
+                      });
+                    },
                   ),
                 ),
                 Expanded(
                   flex: 1,
                   child: PhotoButton(
                     iconImage: Icon(Icons.collections),
+                    onPress: () async {
+                      final _image =
+                          await _picker.pickImage(source: ImageSource.gallery);
+                      setState(() {
+                        exampleThumbnail = Image.file(File(_image!.path));
+                      });
+                    },
                   ),
                 ),
               ],
@@ -94,9 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class PhotoButton extends StatelessWidget {
   final Icon iconImage;
+  final VoidCallback onPress;
 
   const PhotoButton({
     required this.iconImage,
+    required this.onPress,
     Key? key,
   }) : super(key: key);
 
@@ -108,7 +130,7 @@ class PhotoButton extends StatelessWidget {
         shape: CircleBorder(),
       ),
       child: IconButton(
-        onPressed: () {},
+        onPressed: onPress,
         icon: iconImage,
         color: Colors.white,
       ),
