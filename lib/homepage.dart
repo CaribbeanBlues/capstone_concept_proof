@@ -86,8 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       final _image =
                           await _picker.pickImage(source: ImageSource.camera);
                       setState(() {
-                        imageModel.setPreviewImageFile(
-                            Image.file(File(_image!.path)));
+                        imageModel.setPreviewImageFile(File(_image!.path));
                       });
                     },
                   ),
@@ -100,8 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       final _image =
                           await _picker.pickImage(source: ImageSource.gallery);
                       setState(() {
-                        imageModel.setPreviewImageFile(
-                            Image.file(File(_image!.path)));
+                        imageModel.setPreviewImageFile(File(_image!.path));
                       });
                     },
                   ),
