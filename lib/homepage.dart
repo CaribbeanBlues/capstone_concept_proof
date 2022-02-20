@@ -1,7 +1,8 @@
 import 'dart:io';
-
+import 'package:capstone_concept_proof/image_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -15,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final ImagePicker _picker = ImagePicker();
-  Image exampleThumbnail = Image.asset('images/mlkit_logo.png');
+  ImageModel imageModel = ImageModel();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                   flex: 2,
-                  child: exampleThumbnail,
+                  child: imageModel.previewImage,
                 ),
                 Expanded(
                   flex: 1,
@@ -85,7 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       final _image =
                           await _picker.pickImage(source: ImageSource.camera);
                       setState(() {
-                        exampleThumbnail = Image.file(File(_image!.path));
+                        imageModel.setPreviewImageFile(
+                            Image.file(File(_image!.path)));
                       });
                     },
                   ),
@@ -98,7 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       final _image =
                           await _picker.pickImage(source: ImageSource.gallery);
                       setState(() {
-                        exampleThumbnail = Image.file(File(_image!.path));
+                        imageModel.setPreviewImageFile(
+                            Image.file(File(_image!.path)));
                       });
                     },
                   ),
