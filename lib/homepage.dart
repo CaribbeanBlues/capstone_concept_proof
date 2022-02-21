@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                   flex: 2,
-                  child: imageModel.previewImage,
+                  child: imageModel.getPreviewImage(),
                 ),
                 Expanded(
                   flex: 1,
@@ -81,10 +81,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   flex: 1,
                   child: PhotoButton(
-                    iconImage: Icon(Icons.camera),
+                    iconImage: Platform.isIOS | Platform.isMacOS
+                        ? const Icon(CupertinoIcons.camera_fill)
+                        : const Icon((Icons.camera)),
                     onPress: () async {
                       final _image =
                           await _picker.pickImage(source: ImageSource.camera);
+                      imageModel.readImage();
+                      print("Image Data: $imageModel.");
                       setState(() {
                         imageModel.setPreviewImageFile(File(_image!.path));
                       });
@@ -94,10 +98,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   flex: 1,
                   child: PhotoButton(
-                    iconImage: Icon(Icons.collections),
+                    iconImage: Platform.isIOS || Platform.isMacOS
+                        ? const Icon(
+                            CupertinoIcons.photo_fill_on_rectangle_fill)
+                        : const Icon(Icons.collections),
                     onPress: () async {
                       final _image =
                           await _picker.pickImage(source: ImageSource.gallery);
+                      imageModel.readImage();
                       setState(() {
                         imageModel.setPreviewImageFile(File(_image!.path));
                       });
