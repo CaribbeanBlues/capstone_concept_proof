@@ -28,11 +28,12 @@ class ImageModel {
     final inputImage = InputImage.fromFile(_imageFile);
     _labels = await _imageLabeler.processImage(inputImage);
     // TODO Use the for loop below to extract and use the data
-    // for (ImageLabel label in labels) {
-    //   final String text = label.label;
-    //   final int index = label.index;
-    //   final double confidence = label.confidence;
-    // }
+    for (ImageLabel label in _labels) {
+      final String text = label.label;
+      final int index = label.index;
+      final double confidence = label.confidence;
+      print("Text is: $text \n Index is: $index \n Confidence is: $confidence");
+    }
     _imageLabeler.close();
   }
 
