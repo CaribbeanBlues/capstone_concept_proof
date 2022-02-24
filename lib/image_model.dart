@@ -7,8 +7,14 @@ class ImageModel {
   // Variables
   Image _previewImage = Image.asset('images/mlkit_logo.png');
   List<ImageLabel> _labels = [];
+
   final _imageLabeler = GoogleMlKit.vision.imageLabeler();
   late File _imageFile;
+
+  // List<String> titles = [];
+  // String text = '';
+  // int index = 0;
+  // double confidence = 0.0;
 
   // Functions
   void setPreviewImagePath(String newPath) {
@@ -28,10 +34,12 @@ class ImageModel {
     final inputImage = InputImage.fromFile(_imageFile);
     _labels = await _imageLabeler.processImage(inputImage);
     // TODO Use the for loop below to extract and use the data
+    // titles.clear();
     for (ImageLabel label in _labels) {
-      final String text = label.label;
-      final int index = label.index;
-      final double confidence = label.confidence;
+      // titles.add(label.label);
+      final text = label.label;
+      final index = label.index;
+      final confidence = label.confidence;
       print("Text is: $text \n Index is: $index \n Confidence is: $confidence");
     }
     _imageLabeler.close();
