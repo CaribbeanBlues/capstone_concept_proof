@@ -2,7 +2,8 @@ import 'dart:io';
 import 'package:capstone_concept_proof/image_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:tflite/tflite.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -15,8 +16,58 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List? _listResult;
+  PickedFile? _imageFile;
+  bool _loading = false;
   final ImagePicker _picker = ImagePicker();
-  ImageModel imageModel = ImageModel();
+
+  @override
+  void initState() {
+    super.initState();
+    _loading = true;
+    _loadModel();
+  }
+
+  void _loadModel() async {
+    await Tflite.loadModel(
+      model: "assets/mobilenet_v1_1.0_224_quant.tflite",
+      labels: "assets/labels_mobilenet_quant_v1_224.txt",
+    ).then((value) {
+      setState(() {
+        _loading = false;
+      });
+    });
+  }
+
+  void _imageSelection() async {
+    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _loading = true;
+      _imageFile = PickedFile(image!.path);
+    });
+    _imageClasification(PickedFile(image!.path));
+  }
+
+  void _imageClasification(PickedFile image) async {
+    var output = await Tflite.runModelOnImage(
+      path: image.path,
+      numResults: 2,
+      threshold: 0.5,
+      imageMean: 127.5,
+      imageStd: 127.5,
+    );
+    setState(() {
+      _loading = false;
+      _listResult = output;
+      print('Your results are: ${_listResult.toString()}');
+    });
+  }
+
+  @override
+  void dispose() {
+    Tflite.close();
+    super.dispose();
+  }
 
   // String label1 = '';
   // String label2 = '';
@@ -45,7 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                   flex: 2,
-                  child: imageModel.getPreviewImage(),
+                  child: _imageFile == null
+                      ? Image.asset('assets/images/mlkit_logo.png')
+                      : Image.file(File(_imageFile!.path)),
                 ),
                 Expanded(
                   flex: 1,
@@ -79,15 +132,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     iconImage: Platform.isIOS | Platform.isMacOS
                         ? const Icon(CupertinoIcons.camera_fill)
                         : const Icon((Icons.camera)),
-                    onPress: () async {
-                      final _image =
-                          await _picker.pickImage(source: ImageSource.camera);
-                      imageModel.readImage();
-                      print("Image Data: $imageModel.");
-                      setState(() {
-                        imageModel.setPreviewImageFile(File(_image!.path));
-
-                      });
+                    onPress: () {
+                      // openCamera();
                     },
                   ),
                 ),
@@ -98,16 +144,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ? const Icon(
                             CupertinoIcons.photo_fill_on_rectangle_fill)
                         : const Icon(Icons.collections),
-                    onPress: () async {
-                      final _image =
-                          await _picker.pickImage(source: ImageSource.gallery);
-                      imageModel.readImage();
-                      setState(() {
-                        imageModel.setPreviewImageFile(File(_image!.path));
-
-                        print(
-                            'First Results of Image: ${imageModel.getImageLabels().first.label}');
-                      });
+                    onPress: () {
+                      _imageSelection();
                     },
                   ),
                 ),

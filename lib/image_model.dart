@@ -5,7 +5,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 
 class ImageModel {
   // Variables
-  Image _previewImage = Image.asset('images/mlkit_logo.png');
+  Image _previewImage = Image.asset('assets/images/mlkit_logo.png');
   List<ImageLabel> _labels = [];
 
   final _imageLabeler = GoogleMlKit.vision.imageLabeler();
@@ -33,7 +33,7 @@ class ImageModel {
   Future<void> readImage() async {
     final inputImage = InputImage.fromFile(_imageFile);
     _labels = await _imageLabeler.processImage(inputImage);
-    // TODO Use the for loop below to extract and use the data
+    // TODO Use the for loop below to extract and use the view
     // titles.clear();
     for (ImageLabel label in _labels) {
       // titles.add(label.label);

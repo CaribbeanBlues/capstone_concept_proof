@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.4+9
   google_ml_kit: ^0.7.3
+  tflite: ^1.1.2
 
 dev_dependencies:
 
@@ -29,4 +30,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - images/mlkit_logo.png
+    - assets/images/mlkit_logo.png
+    - assets/labels_mobilenet_quant_v1_224.txt
+    - assets/mobilenet_v1_1.0_224_quant.tflite
