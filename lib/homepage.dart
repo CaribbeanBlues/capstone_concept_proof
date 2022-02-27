@@ -86,9 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       print("Image Data: $imageModel.");
                       setState(() {
                         imageModel.setPreviewImageFile(File(_image!.path));
-                        // label1 = imageModel.titles[0];
-                        // label3 = imageModel.titles[1];
-                        // label3 = imageModel.titles[2];
+
                       });
                     },
                   ),
@@ -106,10 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       imageModel.readImage();
                       setState(() {
                         imageModel.setPreviewImageFile(File(_image!.path));
-                        //
-                        // label1 = imageModel.titles[0];
-                        // label3 = imageModel.titles[1];
-                        // label3 = imageModel.titles[2];
+
+                        print(
+                            'First Results of Image: ${imageModel.getImageLabels().first.label}');
                       });
                     },
                   ),
