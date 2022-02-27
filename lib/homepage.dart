@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:capstone_concept_proof/image_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -14,15 +13,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final ImagePicker _picker = ImagePicker();
   ImageModel imageModel = ImageModel();
   String questionText = 'Une fruite rouge';
-  String bestGuest = '';
-  double bestGuestConf = 0.00;
-  String guessTwo = '';
-  double guessTwoConf = 0.00;
-  String guessThree = '';
-  double guessThreeConf = 0.00;
 
   @override
   Widget build(BuildContext context) {
@@ -58,28 +50,28 @@ class _MyHomePageState extends State<MyHomePage> {
                             text: ' Best Guess: ',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
-                            text: ' \n $bestGuest ',
+                            text: ' \n ${imageModel.bestGuest}',
                             style: TextStyle(fontStyle: FontStyle.italic)),
                         TextSpan(
-                            text: ' \n $bestGuestConf ',
+                            text: ' \n ${imageModel.bestGuestConf} ',
                             style: TextStyle(fontStyle: FontStyle.italic)),
                         TextSpan(
                             text: '\n Guess 2: ',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
-                            text: ' \n $guessTwo ',
+                            text: ' \n ${imageModel.guessTwo}',
                             style: TextStyle(fontStyle: FontStyle.italic)),
                         TextSpan(
-                            text: ' \n $guessTwoConf ',
+                            text: ' \n ${imageModel.guessTwoConf}',
                             style: TextStyle(fontStyle: FontStyle.italic)),
                         TextSpan(
                             text: '\n Guess 3: ',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
-                            text: ' \n $guessThree: ',
+                            text: ' \n ${imageModel.guessThree}',
                             style: TextStyle(fontStyle: FontStyle.italic)),
                         TextSpan(
-                            text: ' \n $guessThreeConf: ',
+                            text: ' \n ${imageModel.guessThreeConf}: ',
                             style: TextStyle(fontStyle: FontStyle.italic)),
                       ],
                     ),
@@ -99,13 +91,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     iconImage: Platform.isIOS | Platform.isMacOS
                         ? const Icon(CupertinoIcons.camera_fill)
                         : const Icon((Icons.camera)),
-                    onPress: () async {
-                      final _image =
-                          await _picker.pickImage(source: ImageSource.camera);
+                    onPress: () {
                       setState(() {
-                        imageModel.setPreviewImageFile(File(_image!.path));
+                        imageModel.pickImage(ImageSourceType.camera);
+                        imageModel.updateGuesses();
                       });
-                      // imageModel.readImage();
                     },
                   ),
                 ),
@@ -116,13 +106,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ? const Icon(
                             CupertinoIcons.photo_fill_on_rectangle_fill)
                         : const Icon(Icons.collections),
-                    onPress: () async {
-                      final _image =
-                          await _picker.pickImage(source: ImageSource.gallery);
+                    onPress: () {
+                      imageModel.pickImage(ImageSourceType.gallery);
                       setState(() {
-                        imageModel.setPreviewImageFile(File(_image!.path));
+                        imageModel.updateGuesses();
                       });
-                      // imageModel.readImage();
                     },
                   ),
                 ),
