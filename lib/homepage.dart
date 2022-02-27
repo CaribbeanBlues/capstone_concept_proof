@@ -16,6 +16,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final ImagePicker _picker = ImagePicker();
   ImageModel imageModel = ImageModel();
+  String questionText = 'Une fruite rouge';
+  String bestGuest = '';
+  double bestGuestConf = 0.00;
+  String guessTwo = '';
+  double guessTwoConf = 0.00;
+  String guessThree = '';
+  double guessThreeConf = 0.00;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             flex: 1,
             child: Text(
-              'Une fruite rouge',
+              questionText,
               textAlign: TextAlign.center,
               style: const TextStyle(fontStyle: FontStyle.italic),
             ),
@@ -48,14 +55,32 @@ class _MyHomePageState extends State<MyHomePage> {
                     TextSpan(
                       children: <TextSpan>[
                         TextSpan(
-                            text: ' Guess 1:',
+                            text: ' Best Guess: ',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
-                            text: '\n Guess 2:',
+                            text: ' \n $bestGuest ',
+                            style: TextStyle(fontStyle: FontStyle.italic)),
+                        TextSpan(
+                            text: ' \n $bestGuestConf ',
+                            style: TextStyle(fontStyle: FontStyle.italic)),
+                        TextSpan(
+                            text: '\n Guess 2: ',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
-                            text: '\n Guess 3:',
+                            text: ' \n $guessTwo ',
+                            style: TextStyle(fontStyle: FontStyle.italic)),
+                        TextSpan(
+                            text: ' \n $guessTwoConf ',
+                            style: TextStyle(fontStyle: FontStyle.italic)),
+                        TextSpan(
+                            text: '\n Guess 3: ',
                             style: TextStyle(fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: ' \n $guessThree: ',
+                            style: TextStyle(fontStyle: FontStyle.italic)),
+                        TextSpan(
+                            text: ' \n $guessThreeConf: ',
+                            style: TextStyle(fontStyle: FontStyle.italic)),
                       ],
                     ),
                   ),
