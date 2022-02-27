@@ -49,23 +49,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     TextSpan(
                       children: <TextSpan>[
                         TextSpan(
-                            text: ' Label: ',
+                            text: ' Guess 1:',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
-                          text: ('null'),
-                        ),
-                        TextSpan(
-                            text: '\n Index: ',
+                            text: '\n Guess 2:',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
-                          text: ('0'),
-                        ),
-                        TextSpan(
-                            text: '\n Confidence: ',
+                            text: '\n Guess 3:',
                             style: TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(
-                          text: ('0'),
-                        ),
                       ],
                     ),
                   ),
@@ -91,9 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       print("Image Data: $imageModel.");
                       setState(() {
                         imageModel.setPreviewImageFile(File(_image!.path));
-                        // TODO Fix this as you wish
-                        print(
-                            'First Results of Image: ${imageModel.getImageLabels().first.label}');
                       });
                     },
                   ),
@@ -111,9 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       imageModel.readImage();
                       setState(() {
                         imageModel.setPreviewImageFile(File(_image!.path));
-                        // TODO Fix this as you wish
-                        print(
-                            'First Results of Image: ${imageModel.getImageLabels().first.label}');
                       });
                     },
                   ),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "417068212673",
+    "project_id": "wazzit--proof-of-concept",
+    "storage_bucket": "wazzit--proof-of-concept.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417068212673:android:bb8bc5da43733384bd0f40",
+        "android_client_info": {
+          "package_name": "com.urbaniq.capstone_concept_proof"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417068212673-fco9hls2hr687vab9drstgcbu7r40plq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD5IZ8CbOy_a1tqVy4slplLLiPzJAWSWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417068212673-fco9hls2hr687vab9drstgcbu7r40plq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
