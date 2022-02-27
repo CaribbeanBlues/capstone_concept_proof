@@ -18,6 +18,10 @@ class _MyHomePageState extends State<MyHomePage> {
   final ImagePicker _picker = ImagePicker();
   ImageModel imageModel = ImageModel();
 
+  // String label1 = '';
+  // String label2 = '';
+  // String label3 = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       print("Image Data: $imageModel.");
                       setState(() {
                         imageModel.setPreviewImageFile(File(_image!.path));
+
                       });
                     },
                   ),
@@ -99,6 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       imageModel.readImage();
                       setState(() {
                         imageModel.setPreviewImageFile(File(_image!.path));
+
+                        print(
+                            'First Results of Image: ${imageModel.getImageLabels().first.label}');
                       });
                     },
                   ),
