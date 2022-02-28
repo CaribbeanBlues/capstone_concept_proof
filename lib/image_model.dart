@@ -5,7 +5,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 
 class ImageModel {
   // Variables
-  Image _previewImage = Image.asset('images/mlkit_logo.png');
+  Image _previewImage = Image.asset('assets/images/mlkit_logo.png');
   List<ImageLabel> _labels = [];
 
   final _imageLabeler = GoogleMlKit.vision.imageLabeler();
