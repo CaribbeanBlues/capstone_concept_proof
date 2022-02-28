@@ -20,6 +20,29 @@ class _MyHomePageState extends State<MyHomePage> {
   final ImagePicker _picker = ImagePicker();
   ImageModel imageModel = ImageModel();
 
+  bool isWorking = false;
+  String result = '';
+  CameraController? cameraController;
+  CameraImage? imgCamera;
+
+  initCamera() {
+    cameraController = CameraController(cameras[0], ResolutionPreset.medium);
+    cameraController!.initialize().then((value) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        cameraController!.startImageStream((imageFromStream) => {
+              if (!isWorking)
+                {
+                  isWorking = true,
+                  imgCamera = imageFromStream,
+                }
+            });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,12 +93,19 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.all(16.0),
             child: Align(
               alignment: Alignment.bottomRight,
-              child: FloatingActionButton(
-                child: Platform.isIOS | Platform.isMacOS
-                    ? const Icon(CupertinoIcons.camera_fill)
-                    : const Icon((Icons.camera)),
-                onPressed: () {},
-              ),
+              child: imgCamera == null
+                  ? FloatingActionButton(
+                      child: Platform.isIOS | Platform.isMacOS
+                          ? const Icon(CupertinoIcons.camera_fill)
+                          : const Icon((Icons.camera)),
+                      onPressed: () {
+                        initCamera();
+                      },
+                    )
+                  : AspectRatio(
+                      aspectRatio: cameraController!.value.aspectRatio,
+                      child: CameraPreview(cameraController!),
+                    ),
             ),
           )
         ],
