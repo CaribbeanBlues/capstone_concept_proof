@@ -7,7 +7,6 @@ class ImageModel {
   // Variables
   Image _previewImage = Image.asset('images/mlkit_logo.png');
   List<ImageLabel> _labels = [];
-
   final _imageLabeler = GoogleMlKit.vision.imageLabeler();
   late File _imageFile;
 

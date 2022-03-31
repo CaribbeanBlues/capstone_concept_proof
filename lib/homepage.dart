@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -86,7 +87,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       print("Image Data: $imageModel.");
                       setState(() {
                         imageModel.setPreviewImageFile(File(_image!.path));
-
                       });
                     },
                   ),
